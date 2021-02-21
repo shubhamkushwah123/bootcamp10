@@ -1,0 +1,15 @@
+- name : ec2-launcher
+  hosts : localhost
+  connection : local
+  tasks :
+  - name : launch ec2
+    ec2 : 
+     instance_type : t2.micro
+     key_name : devops-ec2
+     image : ami-02aa7f3de34db391a
+     region : us-east-2
+     group : edureka-demo
+     count : 1
+     vpc_subnet_id : subnet-9f5562e5
+     wait : yes
+     assign_public_ip : yes
