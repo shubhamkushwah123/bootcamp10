@@ -6,14 +6,14 @@ services:
     image: mysql
     environment:
       MYSQL_DATABASE: wordpress_data
-      MYSQL_ROOT_PASSWORD: edureka
+      MYSQL_ROOT_PASSWORD: root
       MYSQL_ROOT_HOST: '%'
     volumes:
       - ./sql:/docker-entrypoint-initdb.d
     ports:
       - "6033:3306"
     healthcheck:
-      test: "/usr/bin/mysql --user=root --password=edureka --execute \"SHOW DATABASES;\""
+      test: "/usr/bin/mysql --user=root --password=root --execute \"SHOW DATABASES;\""
       interval: 2s
       timeout: 20s
       retries: 10
@@ -24,7 +24,7 @@ services:
     links:
     - wordpress_db:mysql
     ports:
-    - "8080:80"
+    - "8082:80"
     environment:
       WAIT_HOST: mysql:3306
     depends_on:
@@ -38,4 +38,4 @@ services:
     - 8081:80
     environment:
       MYSQL_USERNAME: root
-      MYSQL_ROOT_PASSWORD: edureka
+      MYSQL_ROOT_PASSWORD: root
