@@ -1,0 +1,34 @@
+---
+- hosts: all
+  become: true
+  tasks:
+  - name: install maven
+    apt:
+      pkg: maven
+      state: present
+    notify:
+    - run update
+  - name: install tomcat
+    apt:
+      pkg: tomcat9
+      state: present
+  - name: uninstall git
+    apt:
+      pkg: git
+      state: absent
+  - name: install docker
+    apt:
+      pkg: docker.io
+      state: present
+  - name: start docker service
+    service:
+      name: docker
+      state: started
+      enabled: true
+  - name: deploy addressbook application
+    command: sudo docker run -it -d -p 8085:8080 shubhamkushwah123/addressbook:1.0
+  handlers:
+  - name: run update
+    apt:
+      update_cache: yes
+
