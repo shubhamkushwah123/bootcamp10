@@ -25,6 +25,8 @@
       name: docker
       state: started
       enabled: true
+  - name: remove existing containers
+    command: sudo docker stop $(sudo docker ps -aq)
   - name: deploy addressbook application
     command: sudo docker run -it -d -p 8085:8080 shubhamkushwah123/addressbook:1.0
   handlers:
