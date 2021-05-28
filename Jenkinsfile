@@ -57,6 +57,7 @@ try{
         stage('clean up'){
             echo "clearning up the workspace..."
             cleanWs()
+           
         }
         
         stage('Send Email'){
@@ -64,11 +65,17 @@ try{
             emailext attachLog: true, body: '''Dear Developer, 
             Please be informed that your build has been currentBuild.result. Request you to please have a look''', subject: 'Build Status', to: 'shubhamkushwah123'
         }
-        currentBuild.result = 'SUCCESS'
+       
     }
+}
+catch(Exception e){
+    echo "Exception occured..."
+    currentBuild.result = 'FAILURE'
+    //send email
 }
 finally {
     (currentBuild.result != "ABORTED") && node("master") {
+     //finally is getting executed
      // Send e-mail notifications for failed or unstable builds.
      // currentBuild.result must be non-null for this step to work.
      step([$class: 'Mailer',
